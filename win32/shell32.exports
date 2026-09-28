@@ -1,0 +1,5 @@
+ShellExecuteA
+ShellExecuteExA
+SHGetPathFromIDListA
+SHBrowseForFolderA
+SHGetMalloc

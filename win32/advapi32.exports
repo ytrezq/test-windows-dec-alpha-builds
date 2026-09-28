@@ -1,0 +1,10 @@
+RegOpenKeyA
+RegOpenKeyExA
+RegCloseKey
+RegQueryValueA
+RegQueryValueExA
+RegSetValueA
+RegEnumKeyA
+RegEnumValueA
+RegDeleteKeyA
+GetUserNameA

@@ -1,0 +1,8 @@
+build/
+*.o
+*.w64.o
+*.dll
+*.exe
+!docs/*.png
+__pycache__/
+*.pyc

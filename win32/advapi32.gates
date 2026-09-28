@@ -1,0 +1,1 @@
+__adv_RegOpenKeyA,__adv_RegOpenKeyExA,__adv_RegCloseKey,__adv_RegQueryValueA,__adv_RegQueryValueExA,__adv_RegSetValueA,__adv_RegEnumKeyA,__adv_RegEnumValueA,__adv_RegDeleteKeyA,__adv_GetUserNameA

@@ -1,0 +1,13 @@
+SECTIONS {
+  . = @TEXT@;                      /* RVA 0..0x2000 holds the PE headers */
+  .text   : { *(.text .text.*) }
+  . = ALIGN(0x2000);
+  .rdata  : { *(.rodata .rodata.*) }
+  . = ALIGN(0x2000);
+  .data   : { *(.data .data.*) *(.sdata .sdata.*) }
+  . = ALIGN(0x2000);
+  .got    : { *(.got .got.plt) }
+  . = ALIGN(0x2000);
+  .bss    : { *(.bss .bss.*) *(.sbss .sbss.*) *(COMMON) }
+  /DISCARD/ : { *(.eh_frame*) *(.comment) *(.note*) *(.pdr) *(.mdebug*) }
+}

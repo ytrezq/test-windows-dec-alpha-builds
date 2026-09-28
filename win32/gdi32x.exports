@@ -1,0 +1,8 @@
+CreateFontIndirectA
+ExtTextOutA
+GetCharWidthA
+GetObjectA
+GetTextAlign
+GetTextExtentPoint32A
+GetTextExtentPointA
+SetTextAlign
