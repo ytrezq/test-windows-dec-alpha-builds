@@ -129,6 +129,12 @@ register), and what is still missing (`.pdata`, so no SEH). It includes a
 controlled experiment isolating the one register that differs, and it states
 where a single test application stops proving things.
 
+## Prebuilt
+
+If you would rather not install a cross toolchain, [`prebuilt/axp64-runtime-prebuilt.zip`](prebuilt/) is the compiled
+output of this repository: the JIT, the Wine-hosted loader, the Alpha-compiled Win32
+layer, and an AXP64 test application built from source here.
+
 ## What is in here
 
 | | |
