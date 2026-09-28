@@ -155,8 +155,29 @@ layer, and an AXP64 test application built from source here.
   a reimplementation of `MFC42.DLL` for AXP64, which is what it takes to run
   a real MFC application such as Dependency Walker.
 
-## Note on third-party binaries
+## Provenance and licensing
 
-Nothing here is redistributed from Microsoft or anyone else. The AXP64 test
-program is built from source in this repository. To run a real AXP64
-application you supply your own copy.
+The Win32 layer in `win32/` — `KERNEL32`, `USER32`, `GDI32`, `MSVCRT`,
+`ADVAPI32`, `SHELL32`, `COMDLG32`, `COMCTL32` — is original code written
+against the published Win32 API, in the same clean-room position as Wine: no
+Microsoft source, no leaked source, no disassembly of Microsoft's
+implementation. It is covered by this repository's licence and is meant to be
+redistributed, including in binary form. `prebuilt/` exists for exactly that.
+
+This is why the amd64 comparison in `docs/` needed nothing compiled at all:
+Wine's own reimplementation of the same API is packaged by the distribution,
+so `depends.exe` for amd64 runs on stock `apt install wine`. This repository
+is the AXP64 half of that same idea — the API reimplemented, this time for an
+architecture Wine has no port for.
+
+The one component with a different provenance is `MFC42`, which lives in
+[its own repository](https://github.com/ytrezq/dec-alpha-mfc42-partial-reverse-engineering):
+MFC 4.2 exports by ordinal with no public mapping, so ordinals, vtable slot
+order and structure offsets had to be recovered by analysing Microsoft's
+shipped binary and its public PDB. That is reverse engineering for
+interoperability — the same thing Wine does for undocumented interfaces — and
+it is still original code, but the distinction is worth stating plainly.
+
+No Microsoft binary is redistributed anywhere in these repositories. The
+AXP64 test program is built from source here; to run a real AXP64 application
+you supply your own copy of it.

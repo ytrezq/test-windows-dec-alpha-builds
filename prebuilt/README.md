@@ -18,5 +18,13 @@ cat RUN.txt
 
 Needs `wine` and, for the windowed test, `Xvfb`. Wine is used unmodified.
 
-No third-party binaries are redistributed. To run a real AXP64 application
-you supply your own copy.
+## Provenance
+
+The Alpha-compiled DLLs in `guest/` are original code written against the
+published Win32 API — the same clean-room position as Wine, which is why
+Wine ships in distributions and why the amd64 side of this comparison needs
+nothing compiled at all. They are covered by this repository's licence and
+are meant to be redistributed in binary form.
+
+No Microsoft binary is included. To run a real AXP64 application you supply
+your own copy of it.
