@@ -20,6 +20,7 @@ while [ $# -gt 0 ]; do
     --export) EXPORTS="$EXPORTS --export $2"; shift 2;;
     --export-file) while read -r e; do [ -n "$e" ] && EXPORTS="$EXPORTS --export $e"; done < "$2"; shift 2;;
     --export-ord) EXPORTS="$EXPORTS --export-ord $2"; shift 2;;
+    --no-pv-thunk) EXTRA="$EXTRA --no-pv-thunk"; shift;;
     *) SRCS="$SRCS $1"; shift;;
   esac
 done
@@ -27,7 +28,7 @@ TMP=$(mktemp -d); trap 'rm -rf "$TMP"' EXIT
 OBJS=""
 for s in $SRCS; do
   o="$TMP/$(basename "$s" .c).o"
-  alpha-linux-gnu-gcc -O2 -mcpu=ev6 -fno-pic -ffreestanding -fno-builtin \
+  alpha-linux-gnu-gcc -O2 -mcpu=ev6 -fno-pic -ffreestanding -fno-builtin $EXTRA_CFLAGS \
       -fno-stack-protector -c -o "$o" "$s"
   OBJS="$OBJS $o"
 done
@@ -42,4 +43,4 @@ TEXT=$(printf '0x%x' $(( BASE + 0x2000 )))
 sed "s/@TEXT@/$TEXT/" "$HERE/axp64.ld.in" > "$TMP/link.ld"
 alpha-linux-gnu-ld -T "$TMP/link.ld" --emit-relocs -o "$TMP/image.elf" $OBJS $DEFS 2>&1 \
   | grep -v 'RWX permissions' || true
-python3 "$HERE/elf2pe.py" "$TMP/image.elf" "$OUT" $DLL --entry "$ENTRY" $IMPORTS $EXPORTS
+python3 "$HERE/elf2pe.py" "$TMP/image.elf" "$OUT" $DLL --entry "$ENTRY" $IMPORTS $EXPORTS $EXTRA

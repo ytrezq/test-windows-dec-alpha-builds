@@ -206,6 +206,10 @@ def main():
                     help="EXPNAME[=symbol][:data] to export (repeatable). "
                          "':data' exports the address directly instead of "
                          "going through a pv-setup thunk.")
+    ap.add_argument("--no-pv-thunk", action="store_true",
+                    help="export raw gcc entry addresses instead of pv-setup "
+                         "thunks.  Only useful to demonstrate that the NT-Alpha "
+                         "vs SysV-Alpha procedure-value difference is real.")
     ap.add_argument("--import", dest="imports", action="append", default=[],
                     help="DLL.dll:sym1,sym2 (repeatable)")
     ap.add_argument("--export-ord", action="append", default=[],
@@ -338,6 +342,8 @@ def main():
 
     def emit_thunk(target_value, label):
         """Append a pv-setup thunk jumping to target_value; return its VA."""
+        if args.no_pv_thunk:
+            return target_value
         here = base + thunk_rva + len(thunks)
         off = target_value - (here + 4)        # relative to the ldah, which
         lo = ((off & 0xFFFF) ^ 0x8000) - 0x8000            # br leaves in r27

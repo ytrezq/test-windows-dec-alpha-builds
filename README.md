@@ -113,6 +113,22 @@ the S→T expansion of a denormal keeps the mantissa with a zero exponent
 rather than collapsing to a signed zero; and with two NaN operands Alpha
 does not keep the first the way x86 does.
 
+## Is this a real port, or a wrapper?
+
+The AXP64 side is genuinely Alpha: the guest executes Alpha instructions,
+translated to x86-64, and the Win32 layer above Wine is itself compiled to
+Alpha. But *running* Alpha instructions is not the same as honouring the
+Windows Alpha **calling convention**, which is a separate document from the
+SysV Alpha ABI that `alpha-linux-gnu-gcc` targets.
+
+That difference is measured, not assumed, in
+**[ABI.md](https://github.com/ytrezq/dec-alpha-cross-binutils/blob/main/ABI.md)**:
+which registers the two conventions agree on (argument, return, callee-saved,
+varargs — all of them), which they do not (`gp`, the procedure-value
+register), and what is still missing (`.pdata`, so no SEH). It includes a
+controlled experiment isolating the one register that differs, and it states
+where a single test application stops proving things.
+
 ## What is in here
 
 | | |
